@@ -1,0 +1,773 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="最近在看React的东西，里面提到了现在最流行的前端模块加载器webpack和browersify。它们都是遵循AMD规范的模块加载器，也是前端工程化的一个重要标杆，所以写下这篇博客，算是这个阶段对Js模块化编程的一点小小梳理和总结吧!">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习javascript 模块化的总结(一)">
+<meta property="og:url" content="http://summerGreenTea.github.io/2015/11/15/js-modularization-programming/index.html">
+<meta property="og:site_name" content="淡夏的绿茶">
+<meta property="og:description" content="最近在看React的东西，里面提到了现在最流行的前端模块加载器webpack和browersify。它们都是遵循AMD规范的模块加载器，也是前端工程化的一个重要标杆，所以写下这篇博客，算是这个阶段对Js模块化编程的一点小小梳理和总结吧!">
+<meta property="og:updated_time" content="2016-03-02T02:58:00.284Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习javascript 模块化的总结(一)">
+<meta name="twitter:description" content="最近在看React的东西，里面提到了现在最流行的前端模块加载器webpack和browersify。它们都是遵循AMD规范的模块加载器，也是前端工程化的一个重要标杆，所以写下这篇博客，算是这个阶段对Js模块化编程的一点小小梳理和总结吧!">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 学习javascript 模块化的总结(一) | 淡夏的绿茶 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">淡夏的绿茶</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                学习javascript 模块化的总结(一)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-11-15T14:59:13+08:00" content="2015-11-15">
+              2015-11-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近在看React的东西，里面提到了现在最流行的前端模块加载器<code>webpack</code>和<code>browersify</code>。它们都是遵循AMD规范的模块加载器，也是前端工程化的一个重要标杆，所以写下这篇博客，算是这个阶段对Js模块化编程的一点小小梳理和总结吧!<br><a id="more"></a></p>
+<h2 id="模块化历程"><a href="#模块化历程" class="headerlink" title="模块化历程"></a>模块化历程</h2><p>Long time ago，我们编写Javascript代码都是这样的：</p>
+<pre><code>function a() {
+    console.log(&apos;this is a&apos;)
+}
+function b() {
+    console.log(&apos;this is b&apos;)
+}
+function c() {
+    console.log(&apos;this is c&apos;)
+}
+..... ):
+</code></pre><p>这样编写代码会出现很多问题，比如全局作用域的污染(这简直是前端开发人员的禁忌啊)，于是乎，又出现了一种新的写法,叫做<code>立即执行函数</code>(Immediately-Invoked Function Expression,IIFE) ：</p>
+<pre><code>var a = (function() {
+
+        function b() {
+            ...
+        }
+        function c() {
+            ...
+        }
+        return {
+            fb: b,
+            fc: c
+        }
+    })();
+</code></pre><p>它利用了函数可以在其内部创建一个局部作用域的特性来创建一个闭包，将所有要执行的代码绑定在其内部的活动对象上,我们还可以传入输入全局对象来配置依赖：</p>
+<pre><code>var a = (function(_) {
+    _.filter(....)
+
+    })(underscore)
+</code></pre><h2 id="利用Script标签加载"><a href="#利用Script标签加载" class="headerlink" title="利用Script标签加载"></a>利用Script标签加载</h2><p>上面的IIFE帮我们解决了Javascript依赖于全局作用域来进行连接的问题，实现了封装。好吧，接着问题又来了，我们组有a、b、c、d、e、f、g各自写了一个模块，那么我们在项目main中引用它们:</p>
+<pre><code>//code in project main
+&lt;script src=&quot;a.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;b.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;c.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;d.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;e.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;f.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;g.js&quot;&gt;&lt;/script&gt;
+</code></pre><p>这里有几个问题：</p>
+<ul>
+<li>难以维护</li>
+<li>如果这些模块之间有明确的调用关系的话（比如f需要用到a中的代码），那么必须保证调用的要加载在被调用的后面</li>
+<li>我们需要向服务器请求7次(7次，你知道向服务器请求7个文件要消耗多少时间、资源…..)</li>
+</ul>
+<h2 id="CommonJS规范"><a href="#CommonJS规范" class="headerlink" title="CommonJS规范"></a>CommonJS规范</h2><p>CommonJS最先实现的在服务端，Let’s check it:</p>
+<pre><code>// add.js
+function add(a, b) {
+    return a + b
+}
+exports.add = add
+
+// main.js
+var method = require(&apos;./add&apos;)
+method.add(1, 2) // 输出为 3
+</code></pre><p>Node.js也是实现了CommonJS的规范来加载模块(详情看官网)，CommonJS主要分为模块引用、模块定义和模块标识。</p>
+<h3 id="模块引入"><a href="#模块引入" class="headerlink" title="模块引入"></a>模块引入</h3><p>CommonJS定义了一个require()的全局函数来导入我们定义的模块倒当前上下文中。</p>
+<h3 id="模块导出"><a href="#模块导出" class="headerlink" title="模块导出"></a>模块导出</h3><p>当我们写了一个模块后，想把它导出来，我们就使用module和exports，exports是module的属性，而module代表当前模块。</p>
+<pre><code>//module
+function a() {
+    console.log(&apos;a&apos;)
+}
+
+module.exports = a  // var _a = require(&apos;a&apos;)  a()
+ // or
+exports.a = a       //var _a = require(&apos;a&apos;) _a.a()
+</code></pre><h3 id="模块标识"><a href="#模块标识" class="headerlink" title="模块标识"></a>模块标识</h3><p>模块标识就是传递给require()的参数，它必须符合小驼峰命名法，或者是以<strong> .、.. </strong> 开头路径或绝对路径，若以.js结尾的可以省略扩展名。</p>
+<h2 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h2><p>在服务端我们可以使用CommonJS所规定的模块加载方式来加载模块，那么在浏览器端是否也用CommonJS来实现加载端模块呢？答案是否定的，在sever端，由于服务器的性能各方面要强与client端，而且在后端加载模块是相当于在本地加载，加载速度杠杠的。那么我们在浏览器上加载这些模块，一方面，我的模块代码都在服务器上，各种请求解析加载什么的，异步加载模块的方式显然用CommonJS的标准是很难实现的，那么需求来了，我们如何实现在浏览器端实现模块的加载，AMD来了。</p>
+<p>在AMD规范下，我们定义模块是这样的：</p>
+<pre><code>define([&apos;module/moduleA&apos;,&apos;module/moduleB&apos;], function(moduleA, moduleB) {
+    //  ...
+    var a = moduleA.methodA();
+    var b = moduleB.methodB();
+    return {
+        a: a,
+        b: b
+    }
+})
+</code></pre><p>define函数用于定义模块，第一个参数定义我们要定义的模块所依赖的模块，第二个参数传入传入一个回调函数，在依赖模块加载完成后传入回调函数中使用。让后通过require函数调用：</p>
+<pre><code>require([&apos;moudle/moduleC&apos;], function(moduleC) {
+    console.log(moduleC.a, moduleC.b);
+})
+</code></pre><h3 id="Require-js"><a href="#Require-js" class="headerlink" title="Require.js"></a>Require.js</h3><p>Request.js是一个实现了AMD的前端模块加载库。<br>关于Require.js的使用方法，篇幅有限，请移步查看<a href="http://www.requirejs.cn/" target="_blank" rel="external">中文Docs</a>。需要提的是require.js用了一种在CommonJS中来定义模块的方式来方便我们加载CommonJS规范的模块：</p>
+<pre><code>define(function(require, exports, module) {
+    var a = require(&apos;module/moduleA&apos;);
+    exports.a = new a();
+})
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/14/web-cache/" rel="next" title="总结web-cache(缓存策略)">
+                <i class="fa fa-chevron-left"></i> 总结web-cache(缓存策略)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/01/nodelist-htmlcollection/" rel="prev" title="学习DOM中的NodeList与HTMLCollection">
+                学习DOM中的NodeList与HTMLCollection <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/default_avatar.jpg"
+               alt="summer" />
+          <p class="site-author-name" itemprop="name">summer</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#模块化历程"><span class="nav-number">1.</span> <span class="nav-text">模块化历程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用Script标签加载"><span class="nav-number">2.</span> <span class="nav-text">利用Script标签加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CommonJS规范"><span class="nav-number">3.</span> <span class="nav-text">CommonJS规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模块引入"><span class="nav-number">3.1.</span> <span class="nav-text">模块引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块导出"><span class="nav-number">3.2.</span> <span class="nav-text">模块导出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块标识"><span class="nav-number">3.3.</span> <span class="nav-text">模块标识</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AMD"><span class="nav-number">4.</span> <span class="nav-text">AMD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Require-js"><span class="nav-number">4.1.</span> <span class="nav-text">Require.js</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">summer</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.scheme !== 'Pisces' && (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always')) {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+  
+
+
+</body>
+</html>

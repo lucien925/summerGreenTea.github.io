@@ -1,0 +1,753 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="HTML," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="最近在看《Javascript高级程序设计》的时候，看到了这样一句话：“理解NodeList和HTMLCollection，是从整体上透彻理解DOM的关键所在。”，所以觉得应该写一篇关于NodeList和HTMLCollection的博客来好好了解和总结下这方面的知识点。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习DOM中的NodeList与HTMLCollection">
+<meta property="og:url" content="http://summerGreenTea.github.io/2015/12/01/nodelist-htmlcollection/index.html">
+<meta property="og:site_name" content="淡夏的绿茶">
+<meta property="og:description" content="最近在看《Javascript高级程序设计》的时候，看到了这样一句话：“理解NodeList和HTMLCollection，是从整体上透彻理解DOM的关键所在。”，所以觉得应该写一篇关于NodeList和HTMLCollection的博客来好好了解和总结下这方面的知识点。">
+<meta property="og:updated_time" content="2016-03-02T02:58:00.382Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习DOM中的NodeList与HTMLCollection">
+<meta name="twitter:description" content="最近在看《Javascript高级程序设计》的时候，看到了这样一句话：“理解NodeList和HTMLCollection，是从整体上透彻理解DOM的关键所在。”，所以觉得应该写一篇关于NodeList和HTMLCollection的博客来好好了解和总结下这方面的知识点。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 学习DOM中的NodeList与HTMLCollection | 淡夏的绿茶 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">淡夏的绿茶</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                学习DOM中的NodeList与HTMLCollection
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-12-01T22:23:11+08:00" content="2015-12-01">
+              2015-12-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近在看《Javascript高级程序设计》的时候，看到了这样一句话：“理解NodeList和HTMLCollection，是从整体上透彻理解DOM的关键所在。”，所以觉得应该写一篇关于NodeList和HTMLCollection的博客来好好了解和总结下这方面的知识点。<br><a id="more"></a></p>
+<h2 id="Nodelist"><a href="#Nodelist" class="headerlink" title="Nodelist"></a>Nodelist</h2><p>NodeList是一个节点的集合(既可以包含元素和其他节点)，在DOM中，节点的类型总共有12种，通过判断节点的nodeType来判断节点的类型。</p>
+<p>我们可以通过Node.childNodes和document.querySelectAll()(返回NodeList的接口有很多，这里不一一列举，下同)来获取到一个NodeList对象。</p>
+<p>　　NodeList对象有个length属性和item()方法，length表示所获得的NodeList对象的节点个数，这里还是要强调的是节点，而item()可以传入一个索引来访问Nodelist中相应索引的元素。</p>
+<pre><code>&lt;body&gt;
+    &lt;div id=&quot;node&quot;&gt;
+        文本节点
+        &lt;!-- 注释节点 --&gt;
+        &lt;span&gt;node1&lt;/span&gt;
+        &lt;span&gt;node2&lt;/span&gt;
+        &lt;span&gt;node3&lt;/span&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;script&gt;
+    var node = document.getElementById(&apos;node&apos;),
+        nodeLists = node.childNodes
+    console.log(nodeLists.length) //     输出为9
+&lt;/script&gt;
+</code></pre><p>上面的HTML代码中，“文本节点”和父节点子节点的空格（连着的文本）算做一个文本节点，然后是一个注释节点和注释节点和元素节点之间的空格（换行会产生空格，空格算做文本节点）的文本节点，紧接着的是一个元素节点和元素节点之间的换行的文本节点，三个元素节点和元素节点间的两个文本节点，最后是最后得元素节点和父元素之间的空格产生的文本节点，总共是9个节点。</p>
+<p>NodeList对象的一大特点是它返回的内容是动态的（live）,也就是说我们上面代码获取nodeLists是类似于“指针”的东西，所以在下面代码中我们在获取了nodeLists之后再向node中插入一个创建的span标签后，发现获取到了nodeLists.length变为10了，但是querySelectorAll这个接口返回的nodeList对象比较特殊，它是个静态（static）的对象。而且是元素的集合。</p>
+<pre><code>&lt;body&gt;
+&lt;div id=&quot;node&quot;&gt;
+    文本节点
+    &lt;!-- 注释节点 --&gt;
+    &lt;span&gt;node1&lt;/span&gt;
+    &lt;span&gt;node2&lt;/span&gt;
+    &lt;span&gt;node3&lt;/span&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;script&gt;
+    var node = document.getElementById(&apos;node&apos;)
+    var nodeLists = node.childNodes
+    var queryNodes = node.querySelectorAll(&apos;span&apos;)
+    node.appendChild(document.createElement(&apos;span&apos;))
+    console.log(nodeLists.length)  // 输出为10
+    console.log(queryNodes.length)  //输出为3
+&lt;/script&gt;
+</code></pre><h2 id="HTMLCollection"><a href="#HTMLCollection" class="headerlink" title="HTMLCollection"></a>HTMLCollection</h2><p>HTMLCollection是元素集合，它和NodeList很像，有length属性来表示HTMLCollection对象的长度，也可以通过elements.item()传入元素索引来访问。当时它还有一个nameItem()方法，可以返回集合中name属性和id属性值得元素。HTMLDocument 接口的许多属性都是 HTMLCollection 对象，它提供了访问诸如表单、图像和链接等文档元素的便捷方式，比如document.images和document.forms的属性都是HTMLCollection对象。</p>
+<pre><code>&lt;body&gt;
+    &lt;img src=&quot;test.png&quot; id=&quot;image1&quot;&gt;
+    &lt;img src=&quot;test.png&quot; id=&quot;image2&quot;&gt;
+    &lt;img src=&quot;test.png&quot; id=&quot;image3&quot;&gt;
+    &lt;img src=&quot;test.png&quot; id=&quot;image4&quot;&gt;
+    &lt;img src=&quot;test.png&quot; id=&quot;image5&quot;&gt;
+    &lt;img src=&quot;test.png&quot; id=&quot;image6&quot;&gt;
+&lt;/body&gt;
+&lt;script&gt;
+    console.log(document.images.namedItem(&apos;image1&apos;)) //&lt;img src=&quot;test.png&quot; id=&quot;image1&quot;&gt;
+&lt;/script&gt;
+</code></pre><p>HTMLCollection的集合和NodeList对象一样也是动态的，他们获取的都是节点或元素集合的一个引用。</p>
+<h2 id="HTMLCollection和NodeList-实时性"><a href="#HTMLCollection和NodeList-实时性" class="headerlink" title="HTMLCollection和NodeList 实时性"></a>HTMLCollection和NodeList 实时性</h2><p>前面都说到了它们连个对象都不是历史文档状态的一个静态快照，而是实时性的，这个是一个非常令人惊讶的特性，它们能随着文档的改变而改变，这个是很值得我们注意的，我们在平常使用一些DOM 接口来返回一些DOM集合的时候，常常会忽视掉这些。<br>　HTMLCollection和NodeList的实时性非常有用，但是，我们有时要迭代一个NodeList或HTMLCollection对象的时候，我们通常会选择生成当前对象的一个快照或静态副本：</p>
+<pre><code>var staticLists = Array.prototype.slice.call(nodeListorHtmlCollection, 0)
+</code></pre><p>这样的话，我们就可以放心的对当前的DOM集合做一些删减和插入操作，这个在DOM密集操作的时候很有用。</p>
+<p>还有MDN上面提到了一个将NodeList转化为Array的DOM扩展原型的方法(<a href="http://perfectionkills.com/whats-wrong-with-extending-the-dom/" target="_blank" rel="external">在IE6/7中存在危险</a>)：</p>
+<pre><code>var arrayMethods = Object.getOwnPropertyNames( Array.prototype );
+arrayMethods.forEach( attachArrayMethodsToNodeList );
+function attachArrayMethodsToNodeList(methodName)
+{
+    if(methodName !== &quot;length&quot;) {
+        NodeList.prototype[methodName] = Array.prototype[methodName];
+    }
+};
+var divs = document.getElementsByTagName( &apos;div&apos; );
+var firstDiv = divs[ 0 ];
+firstDiv.childNodes.forEach(function( divChild ){
+    divChild.parentNode.style.color = &apos;#0F0&apos;;
+});
+</code></pre><h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>DOM最初设计是为了解析XML而设计的，之后沿用到HTML上。我们可以把DOM分为两部分 core 和 html,Core 部分提供最基础的 XML 解析API说明，HTML 部分专为 HTML 中的 DOM 解析添加其特有的 API。NodeList接口是在core中体现的，HTMLCollection则是在html部分，不同浏览器也会实现它们的不同接口，厂商联盟性质的规范组织出现会让这些更加规范，也不出现之前返回的是NodeList对象，但是却是静态的。<br>　这篇文章很多思想都是自己在平时和网上了一些博客中了解到了，其中加了很多自己的组织和理解，目的在于梳理下一些比较深入的知识点，如果写的有疏漏和错误之处，还请指出。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HTML/" rel="tag">#HTML</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/15/js-modularization-programming/" rel="next" title="学习javascript 模块化的总结(一)">
+                <i class="fa fa-chevron-left"></i> 学习javascript 模块化的总结(一)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/03/python-str-concat/" rel="prev" title="python笔记-python中的字符串拼接">
+                python笔记-python中的字符串拼接 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/default_avatar.jpg"
+               alt="summer" />
+          <p class="site-author-name" itemprop="name">summer</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Nodelist"><span class="nav-number">1.</span> <span class="nav-text">Nodelist</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTMLCollection"><span class="nav-number">2.</span> <span class="nav-text">HTMLCollection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTMLCollection和NodeList-实时性"><span class="nav-number">3.</span> <span class="nav-text">HTMLCollection和NodeList 实时性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">4.</span> <span class="nav-text">结语</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">summer</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.scheme !== 'Pisces' && (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always')) {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+  
+
+
+</body>
+</html>
