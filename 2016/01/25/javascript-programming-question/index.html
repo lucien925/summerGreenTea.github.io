@@ -59,14 +59,14 @@
 
 <meta name="description" content="在网上看到一些不错的javascript编程题，于是我也想拿来练练手。这篇博客也将会不断更新。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript-programming-question">
+<meta property="og:title" content="收集的一些有趣的javascript问题">
 <meta property="og:url" content="http://summerGreenTea.github.io/2016/01/25/javascript-programming-question/index.html">
 <meta property="og:site_name" content="淡夏的绿茶">
 <meta property="og:description" content="在网上看到一些不错的javascript编程题，于是我也想拿来练练手。这篇博客也将会不断更新。">
 <meta property="og:image" content="http://summerGreenTea.github.io/2016/01/25/javascript-programming-question/jpq.jpg">
-<meta property="og:updated_time" content="2016-03-02T02:58:00.275Z">
+<meta property="og:updated_time" content="2016-03-03T14:18:08.913Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript-programming-question">
+<meta name="twitter:title" content="收集的一些有趣的javascript问题">
 <meta name="twitter:description" content="在网上看到一些不错的javascript编程题，于是我也想拿来练练手。这篇博客也将会不断更新。">
 <meta name="twitter:image" content="http://summerGreenTea.github.io/2016/01/25/javascript-programming-question/jpq.jpg">
 
@@ -86,7 +86,7 @@
   };
 </script>
 
-  <title> javascript-programming-question | 淡夏的绿茶 </title>
+  <title> 收集的一些有趣的javascript问题 | 淡夏的绿茶 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -208,7 +208,7 @@
             
             
               
-                javascript-programming-question
+                收集的一些有趣的javascript问题
               
             
           </h1>
@@ -265,8 +265,10 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Number</span>.prototype.plus = <span class="function"><span class="keyword">function</span>(<span class="params">num</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span> + a;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Number</span>.prototype.minus = <span class="function"><span class="keyword">function</span>(<span class="params">num</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span> - num;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>实现如下语法的功能：var a = add(2)(3)(4); //9 </p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span><span class="params">(num)</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight scilab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span><span class="params">(x)</span> &#123;</span></span><br><span class="line">    var <span class="built_in">sum</span> = x;</span><br><span class="line">    var tmp = <span class="function"><span class="keyword">function</span> <span class="params">(y)</span> &#123;</span></span><br><span class="line">        <span class="built_in">sum</span> = <span class="built_in">sum</span> + y;</span><br><span class="line">        <span class="keyword">return</span> tmp;</span><br><span class="line">    &#125;;</span><br><span class="line">    tmp.toString = <span class="function"><span class="keyword">function</span> <span class="params">()</span> &#123;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">sum</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
+<p>7.实现将一个多维数组的元素全部都转为一个一维数组<br><figure class="highlight hsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这个题目的解答过程非常巧妙</span></span><br><span class="line"><span class="comment">//利用数组与字符串相加，然后让数组转化为字符串的方式来得到一个数组中所有元素用逗号连成的字符串</span></span><br><span class="line">var arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,[<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,[<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>]]]<span class="comment">;</span></span><br><span class="line">var newArr = (arr + <span class="string">''</span>).<span class="keyword">split</span>(<span class="string">','</span>)<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -387,7 +389,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

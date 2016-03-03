@@ -63,7 +63,7 @@
 <meta property="og:url" content="http://summerGreenTea.github.io/2015/12/06/js-modularization-programming2/index.html">
 <meta property="og:site_name" content="淡夏的绿茶">
 <meta property="og:description" content="前文简单的总结了下前端模块化的一些发展历程和CommonJS规范、AMD规范以及一些模块加载库的实现，这篇文章将介绍下browserify和webpack及以用法。当然，前端模块化最让人惊喜的莫过于ES6的模块化加载方案，后续学习时，也会在ES6学习系列的文章中总结一下。">
-<meta property="og:updated_time" content="2016-03-02T02:58:00.284Z">
+<meta property="og:updated_time" content="2016-03-02T15:00:22.673Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习javascript 模块化的总结(二)">
 <meta name="twitter:description" content="前文简单的总结了下前端模块化的一些发展历程和CommonJS规范、AMD规范以及一些模块加载库的实现，这篇文章将介绍下browserify和webpack及以用法。当然，前端模块化最让人惊喜的莫过于ES6的模块化加载方案，后续学习时，也会在ES6学习系列的文章中总结一下。">
@@ -255,7 +255,8 @@
 <pre><code>browserify b.js -o bundle.js
 </code></pre><p>来将b.js的代码和b.js中reuqire进来的模块进行打包进一个文件(bundle.js)中。</p>
 <h3 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h3><p><strong>webpack</strong>的出现让前端开发重新定义了模块这一词儿。在webpack中，css、图片等静态资源都可以被打包成模块。webpack还支持在模块打包时的插件处理机制。在工程的根目录下新建<strong>webpack.config.js</strong>文件，在文件中配置相关的选项:<br><figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="attribute">entry</span>: <span class="string">"./entry.js"</span>,</span><br><span class="line">    <span class="attribute">output</span>: &#123;</span><br><span class="line">        <span class="attribute">path</span>: __dirname,</span><br><span class="line">        <span class="attribute">filename</span>: <span class="string">"bundle.js"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attribute">module</span>: &#123;</span><br><span class="line">        <span class="attribute">loaders</span>: [</span><br><span class="line">            &#123; <span class="attribute">test</span>: /\.css$/, <span class="attribute">loader</span>: <span class="string">"style!css"</span> &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>在module.loaders中，我们使用了<code>style</code>和<code>css</code>两个loader来帮我们处理在浏览器中加载css文件。在webpack社区中，开源的各种插件已经足够满足我们日常的开发需求。</p>
+<p>在module.loaders中，我们使用了<code>style</code>和<code>css</code>两个loader来帮我们处理在浏览器中加载css文件。在webpack社区中，开源的各种插件已经足够满足我们日常的开发需求。其实细细去挖webpack的东西发现，其实还是一大堆的插件的使用方式balabala的，不如我们带上webpack的好基友React一起来说下吧。</p>
+<p>webpack的到来简直是让React如虎添翼,其核心的功能与作用则和React中的组件化的思想完美契合，并且使用babel-loader来支持React的jsx语法，webpack还支持Hot Loading Component让你不用忍受页面刷来刷去的痛苦。简单的几个loaders一配置，一键搞定。</p>
 
       
     </div>
@@ -374,7 +375,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

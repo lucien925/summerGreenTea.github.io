@@ -63,7 +63,7 @@
 <meta property="og:url" content="http://summerGreenTea.github.io/2015/11/15/js-modularization-programming/index.html">
 <meta property="og:site_name" content="淡夏的绿茶">
 <meta property="og:description" content="最近在看React的东西，里面提到了现在最流行的前端模块加载器webpack和browersify。它们都是遵循AMD规范的模块加载器，也是前端工程化的一个重要标杆，所以写下这篇博客，算是这个阶段对Js模块化编程的一点小小梳理和总结吧!">
-<meta property="og:updated_time" content="2016-03-02T02:58:00.284Z">
+<meta property="og:updated_time" content="2016-03-02T07:44:48.532Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习javascript 模块化的总结(一)">
 <meta name="twitter:description" content="最近在看React的东西，里面提到了现在最流行的前端模块加载器webpack和browersify。它们都是遵循AMD规范的模块加载器，也是前端工程化的一个重要标杆，所以写下这篇博客，算是这个阶段对Js模块化编程的一点小小梳理和总结吧!">
@@ -352,7 +352,9 @@ exports.a = a       //var _a = require(&apos;a&apos;) _a.a()
     var a = require(&apos;module/moduleA&apos;);
     exports.a = new a();
 })
-</code></pre>
+</code></pre><p>个人认为这才真正的按需加载和模块依赖，我在在我们需要的地方去加载这个模块，而不需要在一开始就写好模块来一起加载。</p>
+<p>未完待续……</p>
+
       
     </div>
 
@@ -470,7 +472,7 @@ exports.a = a       //var _a = require(&apos;a&apos;) _a.a()
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
