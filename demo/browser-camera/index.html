@@ -93,7 +93,7 @@
 		}
 		#video {
 			margin-right: 20px;">
-<meta property="og:updated_time" content="2016-03-27T12:26:54.516Z">
+<meta property="og:updated_time" content="2016-03-27T12:35:12.715Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="淡夏的绿茶">
 <meta name="twitter:description" content="Borwser camera demo
@@ -303,23 +303,23 @@
 		errCallback = function(err) {
 			if(err) console.log(err);
 		}
-		if(navigator.getUserMdeia) {
-			navigator.getUserMdeia(videoObj, function(stream) {
+		if(navigator.getUserMedia) {
+			navigator.getUserMedia(videoObj, function(stream) {
 				video.src = stream;
 				video.play();
 			}, errCallback);
 		} else if(navigator.webkitGetUserMedia) {
 			navigator.webkitGetUserMedia(videoObj, function(stream) {
-				video.src = stream;
+				video.src = window.webkitURL.createObjectURL(stream);
 				video.play();
 			}, errCallback);
 		} else if(navigator.mozGetUserMedia) {
 			navigator.mozGetUserMedia(videoObj, function(stream) {
-				video.src = stream;
+				video.src = window.URL.createObjectURL(stream);
 				video.play() 
 			}, errCallback)
 		}
-	});
+	}, false);
 
 	function id(id) {
 		return document.getElementById(id);
