@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Javascript,Unicode," />
+  <meta name="keywords" content="CSS3," />
 
 
 
@@ -57,19 +57,21 @@
 
 
 
-<meta name="description" content="曾近有段时间在学php的时候，总是会碰到往数据库中插入数据乱码问题。前几天JSP老师在课上演示往SQLServer中插入数据，结果也是乱码一大堆了，调试了很久才正常。”字符乱码问题会伴随你们的程序人生”，他说这是这节课最重要的知识点。所以，身为一名未来的程序员，必要的字符编码知识是我们所必须掌握的。">
+<meta name="description" content="之前就掉进过 nth-child 和 nth-of-child 的坑里过，怎么办呢？慢慢爬吧！话说CSS3对选择选择器的扩充可是一大亮点，细细琢磨会发现有许多灵活的运用场景。在看完张鑫旭大神的CSS3选择器:nth-child和:nth-of-type之间的差异，在jsfiddle上也做了下小测试，有了更多的体会。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="学习字符集编码">
-<meta property="og:url" content="http://summerGreenTea.github.io/2015/12/08/learn-unicode/index.html">
+<meta property="og:title" content="css3-selector-nth-child-and-nth-of-child">
+<meta property="og:url" content="http://summerGreenTea.github.io/2016/03/27/css3-selector-nth-child-and-nth-of-child/index.html">
 <meta property="og:site_name" content="淡夏的绿茶">
-<meta property="og:description" content="曾近有段时间在学php的时候，总是会碰到往数据库中插入数据乱码问题。前几天JSP老师在课上演示往SQLServer中插入数据，结果也是乱码一大堆了，调试了很久才正常。”字符乱码问题会伴随你们的程序人生”，他说这是这节课最重要的知识点。所以，身为一名未来的程序员，必要的字符编码知识是我们所必须掌握的。">
-<meta property="og:image" content="http://summerGreenTea.github.io/2015/12/08/learn-unicode/ascii1.png">
-<meta property="og:image" content="http://summerGreenTea.github.io/2015/12/08/learn-unicode/ascii1.png">
-<meta property="og:updated_time" content="2016-03-02T02:58:00.306Z">
+<meta property="og:description" content="之前就掉进过 nth-child 和 nth-of-child 的坑里过，怎么办呢？慢慢爬吧！话说CSS3对选择选择器的扩充可是一大亮点，细细琢磨会发现有许多灵活的运用场景。在看完张鑫旭大神的CSS3选择器:nth-child和:nth-of-type之间的差异，在jsfiddle上也做了下小测试，有了更多的体会。">
+<meta property="og:image" content="http://summerGreenTea.github.io/2016/03/27/css3-selector-nth-child-and-nth-of-child/pic1.png">
+<meta property="og:image" content="http://summerGreenTea.github.io/2016/03/27/css3-selector-nth-child-and-nth-of-child/pic2.png">
+<meta property="og:image" content="http://summerGreenTea.github.io/2016/03/27/css3-selector-nth-child-and-nth-of-child/pic3.png">
+<meta property="og:image" content="http://summerGreenTea.github.io/2016/03/27/css3-selector-nth-child-and-nth-of-child/pic4.png">
+<meta property="og:updated_time" content="2016-03-27T11:29:29.336Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="学习字符集编码">
-<meta name="twitter:description" content="曾近有段时间在学php的时候，总是会碰到往数据库中插入数据乱码问题。前几天JSP老师在课上演示往SQLServer中插入数据，结果也是乱码一大堆了，调试了很久才正常。”字符乱码问题会伴随你们的程序人生”，他说这是这节课最重要的知识点。所以，身为一名未来的程序员，必要的字符编码知识是我们所必须掌握的。">
-<meta name="twitter:image" content="http://summerGreenTea.github.io/2015/12/08/learn-unicode/ascii1.png">
+<meta name="twitter:title" content="css3-selector-nth-child-and-nth-of-child">
+<meta name="twitter:description" content="之前就掉进过 nth-child 和 nth-of-child 的坑里过，怎么办呢？慢慢爬吧！话说CSS3对选择选择器的扩充可是一大亮点，细细琢磨会发现有许多灵活的运用场景。在看完张鑫旭大神的CSS3选择器:nth-child和:nth-of-type之间的差异，在jsfiddle上也做了下小测试，有了更多的体会。">
+<meta name="twitter:image" content="http://summerGreenTea.github.io/2016/03/27/css3-selector-nth-child-and-nth-of-child/pic1.png">
 
 
 
@@ -87,7 +89,7 @@
   };
 </script>
 
-  <title> 学习字符集编码 | 淡夏的绿茶 </title>
+  <title> css3-selector-nth-child-and-nth-of-child | 淡夏的绿茶 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -209,7 +211,7 @@
             
             
               
-                学习字符集编码
+                css3-selector-nth-child-and-nth-of-child
               
             
           </h1>
@@ -221,8 +223,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-12-08T16:30:42+08:00" content="2015-12-08">
-              2015-12-08
+            <time itemprop="dateCreated" datetime="2016-03-27T14:48:40+08:00" content="2016-03-27">
+              2016-03-27
             </time>
           </span>
 
@@ -248,16 +250,31 @@
       
 
       
-        <p>曾近有段时间在学php的时候，总是会碰到往数据库中插入数据乱码问题。前几天JSP老师在课上演示往SQLServer中插入数据，结果也是乱码一大堆了，调试了很久才正常。”字符乱码问题会伴随你们的程序人生”，他说这是这节课最重要的知识点。所以，身为一名未来的程序员，必要的字符编码知识是我们所必须掌握的。<br><a id="more"></a><br>我们先来了解一下一些基本概念:<br><strong>字符集</strong>：是一个系统支持的所有抽象字符的集合。字符是各种文字和符号的总称，包括各国家文字、标点符号、图形符号、数字等。<br><strong>字符集编码</strong>：是一套法则，使用该法则能够对自然语言的字符的一个集合（如字母表或音节表），与其他东西的一个集合（如号码或电脉冲）进行配对。即在符号集合与数字系统之间建立对应关系，它是信息处理的一项基本技术。通常人们用符号集合（一般情况下就是文字）来表达信息。而以计算机为基础的信息处理系统则是利用元件（硬件）不同状态的组合来存储和处理信息的。元件不同状态的组合能代表数字系统的数字，因此字符编码就是将符号转换为计算机可以接受的数字系统的数，称为数字代码。<br>简单来说就是，在计算机内部，我们用0和1来表示数据，也就是二进制，我们把不同种类的语言和这种语言中的字符书写方式用某种规则转化成计算机能识别的二进制数据。</p>
-<h2 id="ASIIC码"><a href="#ASIIC码" class="headerlink" title="ASIIC码"></a>ASIIC码</h2><p>早期的计算机由于是美国人发明的，所以设计之初呢，美国人将英文中的26个英文字母、控制字符（回车键、退格、换行键等和阿拉伯数字用一个字节(八位二进制)来表示,这样最多可以定义256个字符，这个就是ASSIC码。在ASSIC码中，一共规定了128个字符，这些字符只占用了一个字节长度的后七位。<br><img src="/2015/12/08/learn-unicode/ascii1.png" alt="[ASCII码表1]" title="[ASCII码表1]"><br><img src="/2015/12/08/learn-unicode/ascii1.png" alt="[ASCII码表2]" title="[ASCII码表2]"><br>但是随着计算机的发展和普及，越来越多的国家开始使用计算机，不同的国家有不同的字母和语言，而传统的ASSIC的八位二进制最多表示256个字符显然已经满足不了各个国家的字符编码需求了。那么 <em>Unicode</em> 出现了。</p>
-<h2 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h2><p>Unicode的制定方是ISO(国际标准制定组织)，它们的解决方法简单除暴—-把全世界的字母和符号都弄成一中编码方式表示，他们管这个叫Unicode标准。它定义Unicode字符集和Unicode的编码方式(后面会提到)。<br>Unicode规定字符的表示方式为 <em>U+</em> 加上一组十六进制数，这租十六进制数叫做<strong>码点</strong>，Unicode分十七个的平面，整体能表示的字符数量为2<sup>21</sup>。一个基本平面，表示的范围是<strong>U+0000~U+FFFF</strong>,另外十六个平面表示的范围是<strong>U+010000~U+10FFFF</strong>。<br>对于之前的ASSIC码表示的字符，则采用原先的ASSIC码来表示，只是在原先的ASSIC码的基础上在前面加8个0来组成两个字节(这种方式带来的问题是，对于前面127个字符，如果利用Unicode存储这会多浪费一个字节的空间)。其他的字符的编码也是对应排列下去，如果2个字节的长度还不能满足现有的字符，则用3个或4个字节来表示，等等。其实Unicode的字符表示方式给人的感觉是非常大气的，但是这种表示方式带来的问题也很多。<br>首先，就是前面提到的，对于原先的ASSIC码所对应的字符，在Unicode中表示的话则多浪费了一个字节的的存储空间。再一个就是全世界的字符非常多，那么就需要更长的字节来表示一个字符，那么对于原本只需要一个或两个字节表示的字符，我们现在给改为统一的3个或4个字节来表示，造成的结果解释前者的字符编码前面加了很多个0，这对于存储空间是个极大的浪费。Unicode的编码还无法来计算机知道，字符的编码长度，这样计算机也就不知道，这个编码是代表一个字符还是两个字符或者其他的。<br>所以早期的Unicode推广很不顺利，随着互联网的出现，这些问题都得到了解决，人们根据原来的Unicode的编码规则用不同的方式来进行实现，并一步一步的解决了这些问题。</p>
-<h3 id="UTF-8编码"><a href="#UTF-8编码" class="headerlink" title="UTF-8编码"></a>UTF-8编码</h3><p>UTF-8是以字节为单位来对Unicode进行编码,它的编码方式可以总结为：</p>
+        <p>之前就掉进过 <code>nth-child</code> 和 <code>nth-of-child</code> 的坑里过，怎么办呢？慢慢爬吧！话说CSS3对选择选择器的扩充可是一大亮点，细细琢磨会发现有许多灵活的运用场景。在看完张鑫旭大神的<a href="http://www.zhangxinxu.com/wordpress/2011/06/css3%E9%80%89%E6%8B%A9%E5%99%A8nth-child%E5%92%8Cnth-of-type%E4%B9%8B%E9%97%B4%E7%9A%84%E5%B7%AE%E5%BC%82/" target="_blank" rel="external">CSS3选择器:nth-child和:nth-of-type之间的差异</a>，在jsfiddle上也做了下小测试，有了更多的体会。<br><a id="more"></a></p>
+<h3 id="代码开路"><a href="#代码开路" class="headerlink" title="代码开路"></a>代码开路</h3><p>HTML结构:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span> this is element p <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span> this is element p <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span> this is element p <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span> this is element p <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span> this is element p <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span> this is element p <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>CSS样式:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span><span class="selector-pseudo">:nth-child(1)</span> &#123;</span><br><span class="line">	<span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<img src="/2016/03/27/css3-selector-nth-child-and-nth-of-child/pic1.png" alt="pic1.png" title="">
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span><span class="selector-pseudo">:nth-of-type(1)</span> &#123;</span><br><span class="line">	<span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="/2016/03/27/css3-selector-nth-child-and-nth-of-child/pic2.png" alt="pic2.png" title="">
+<p>我们会发现两个例子的第一个p标签的文字都变红了，看出什么”端倪”没？当然看不出来了，根本就没端倪。接着上代码。这次我们把HTML结构修改下。<br>HTML结构:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span>this is element div<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span> this is element p <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span> this is element p <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span> this is element p <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span> this is element p <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span> this is element p <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span> this is element p <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>CSS样式:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span><span class="selector-pseudo">:nth-child(1)</span> &#123;</span><br><span class="line">	<span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<img src="/2016/03/27/css3-selector-nth-child-and-nth-of-child/pic3.png" alt="pic3.png" title="">
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span><span class="selector-pseudo">:nth-of-type(1)</span> &#123;</span><br><span class="line">	<span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="/2016/03/27/css3-selector-nth-child-and-nth-of-child/pic4.png" alt="pic4.png" title="">
+<p>这下看出来了吧！下面就来分析这几段代码产生这些结果的原因。<br>当我们使用<code>p:nth-child(1)</code>的时候，就有如下匹配规则:</p>
 <ol>
-<li>对于单字节的符号，字节的第一位设为0，后面7位为这个符号的unicode码。因此对于英语字母，UTF-8编码和ASCII码是相同的。<br>2.<br>对于n字节的符号（n&gt;1），第一个字节的前n位都设为1，第n+1位设为0，后面字节的前两位一律设为10。剩下的没有提及的二进制位，全部为这个符号的unicode码。<br>| Unicode编码(十六进制) | UTF-8 字节流(二进制)         |<br>| ————- |:————-:|<br>| 00000000 - 0000007F | 0xxxxxxx |<br>| 00000080 - 000007FF | 110xxxxx 10xxxxxx |<br>| 00000800 - 0000FFFF | 1110xxxx 10xxxxxx 10xxxxxx |<br>| 00200000 - 03FFFFFF | 111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx |<br>| 04000000 - 7FFFFFFF | 1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx |<br>UTF-8的特点是节省空间，它的前128个字符的编码和ASSIC码一样，都是用一个字节表示，它也就成为了当下计算机最流行的编码方式。</li>
+<li>找到所有P元素的父元素</li>
+<li>找到这些父元素中的第一个子元素是p元素的元素</li>
+<li>为这个p元素匹配该CSS规则<br>我们把重点放在父元素的<em>父元素中的第一个子元素是p元素的元素</em>上。</li>
 </ol>
-<h3 id="UTF-32编码"><a href="#UTF-32编码" class="headerlink" title="UTF-32编码"></a>UTF-32编码</h3><p>UTF-32又称为<strong>USC-4</strong>。<br>UTF-32的编码都使用4个字节来表示一个字符，这种编码方式是最浪费存储空间的，但是优点就是方便查找，在HTML5的标准中，已经明确网页不能使用UTF-32来进行编码。</p>
-<h3 id="UTF-16编码"><a href="#UTF-16编码" class="headerlink" title="UTF-16编码"></a>UTF-16编码</h3><p>在Unicode中的字符非常多，但是我们大多数人使用最平凡的则是0~65535以内的字符，也就是基本平面(BMP)只需要2两个字节就可以完全表示。于是就有了UTF-16编码，这是一种在字符存储空间和字符查找效率上综合的编码方式。<br>由于在基本平面内(BMP),从U+D800~U+DFFF是没有对应字符的(具体原因还有待解答)，那么在辅助平面上(SMP)，总共有16个平面。每个平面有2<sup>16</sup>个字符编码，那么总共是2<sup>20</sup>个编码。UTF-16将这20位拆成两半，前10位映射在U+D800到U+DBFF，称为<strong>高位（H）</strong> ，后10位映射在U+DC00到U+DFFF，称为<strong>低位（L）</strong> 。这意味着，一个辅助平面的字符，被拆成两个基本平面的字符表示。那么我们在高位的范围中发现了一个字符编码，于是我们用UTF-16的<strong>对应规则</strong>去低位寻找另外一个字符编码，这样，我们就组成了一个在辅助平面上的字符编码。<br>上面提到的对应规则具体为：<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">H</span> = Math.floor((c-<span class="number">0</span>x10000) / <span class="number">0</span>x400)+<span class="number">0</span>xD800</span><br><span class="line"></span><br><span class="line"><span class="attr">L</span> = (c - <span class="number">0</span>x10000) % <span class="number">0</span>x400 + <span class="number">0</span>xDC00</span><br></pre></td></tr></table></figure></p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>这篇文章是根据阮大神的<a href="http://www.ruanyifeng.com/blog/2014/12/unicode.html" target="_blank" rel="external">Unicode与JavaScript详解</a>和吴秦的<a href="http://www.cnblogs.com/skynet/archive/2011/05/03/2035105.html" target="_blank" rel="external">字符集和字符编码</a>的一些讲解加上自己的一些思考写出来的，但是这些毕竟不是官方文档的解释，所以肯定会有些错误，在日后的自己学习当中，会补充和修改。<br>总的来说，我在字符集相关方面的知识还是比较浅，还是需要在日后的一些实践中多多总结，它们的文中的有些点的讲解还是需要好好琢磨一下。</p>
+<p>当我们使用<code>p:nth-of-type(1)</code>的时候，就有如下匹配规则:</p>
+<ol>
+<li>找到所有p元素的父元素</li>
+<li>找到每个父元素中的所有p元素中第一个元素类型是p的元素</li>
+<li>为这个p元素匹配该CSS规则</li>
+</ol>
+<p>这次我们重点关注<em>父元素中的所有p元素中第一个p元素</em>。</p>
+<p>我在学习这两个选择器的时候分析到这里其实思维上有点乱了，我对CSS3的这类选择器的匹配规则的理解是在原先的基础上加上了一系列的<em>限制规则</em>，这些限制规则不同于<code>p.error</code>或<code>p[title=&#39;name&#39;]</code>，它是在位置(出现位置上)、类型(元素类型)有了精确的限制，于此同时，又增加了<code>a[src^=&quot;https&quot;]</code>、<code>a[src$=&quot;.pdf&quot;]</code>等模糊条件的精确匹配，所以CSS3选择器是一种广度上对CSS选择器的扩充。</p>
 
       
     </div>
@@ -272,9 +289,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Javascript/" rel="tag">#Javascript</a>
-          
-            <a href="/tags/Unicode/" rel="tag">#Unicode</a>
+            <a href="/tags/CSS3/" rel="tag">#CSS3</a>
           
         </div>
       
@@ -283,17 +298,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/12/07/es6-let-const/" rel="next" title="ESMAScript6系列之let-const命令">
-                <i class="fa fa-chevron-left"></i> ESMAScript6系列之let-const命令
+              <a href="/2016/03/23/introduce-to-XSS-and-CSRF/" rel="next" title="总结 XSS 与 CSRF 两种跨站攻击">
+                <i class="fa fa-chevron-left"></i> 总结 XSS 与 CSRF 两种跨站攻击
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/12/24/es6-arrow-function/" rel="prev" title="学习ECMAScript6系列之箭头函数">
-                学习ECMAScript6系列之箭头函数 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -411,7 +422,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ASIIC码"><span class="nav-number">1.</span> <span class="nav-text">ASIIC码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unicode"><span class="nav-number">2.</span> <span class="nav-text">Unicode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UTF-8编码"><span class="nav-number">2.1.</span> <span class="nav-text">UTF-8编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UTF-32编码"><span class="nav-number">2.2.</span> <span class="nav-text">UTF-32编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UTF-16编码"><span class="nav-number">2.3.</span> <span class="nav-text">UTF-16编码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">3.</span> <span class="nav-text">结语</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码开路"><span class="nav-number">1.</span> <span class="nav-text">代码开路</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
