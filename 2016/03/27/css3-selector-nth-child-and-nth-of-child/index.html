@@ -68,7 +68,7 @@
 <meta property="og:image" content="http://summerGreenTea.github.io/2016/03/27/css3-selector-nth-child-and-nth-of-child/pic3.png">
 <meta property="og:image" content="http://summerGreenTea.github.io/2016/03/27/css3-selector-nth-child-and-nth-of-child/pic4.png">
 <meta property="og:image" content="http://summerGreenTea.github.io/2016/03/27/css3-selector-nth-child-and-nth-of-child/pic5.png">
-<meta property="og:updated_time" content="2016-04-01T06:33:54.339Z">
+<meta property="og:updated_time" content="2016-04-01T07:53:08.328Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSS3 的nth-child和nth-of-type">
 <meta name="twitter:description" content="之前就掉进过 nth-child 和 nth-of-child 的坑里过，怎么办呢？慢慢爬吧！话说CSS3对选择选择器的扩充可是一大亮点，细细琢磨会发现有许多灵活的运用场景。在看完张鑫旭大神的CSS3选择器:nth-child和:nth-of-type之间的差异，在jsfiddle上也做了下小测试，有了更多的体会。">
@@ -274,7 +274,7 @@
 <li>找到每个父元素中的所有p元素中第一个元素类型是p元素类型的元素</li>
 <li>为这个p元素匹配该CSS规则</li>
 </ol>
-<p>这次我们重点关注<em> 父元素中的所有p元素中第一个p元素类型元素 </em>。</p>
+<p>这次我们重点关注 <em>父元素中的所有p元素中第一个p元素类型元素</em> 。</p>
 <p>我在学习这两个选择器的时候分析到这里其实思维上有点乱了，我对CSS3的这类选择器的匹配规则的理解是，在原先的基础上加上了一系列的<em> 限制规则 </em>，这些限制规则不同于<code>p.error</code>或<code>p[title=&#39;name&#39;]</code>，它是在位置(出现位置上)、类型(元素类型)有了精确的限制，于此同时，又增加了<code>a[src^=&quot;https&quot;]</code>、<code>a[src$=&quot;.pdf&quot;]</code>等模糊条件的精确匹配，所以CSS3选择器是一种 <em> 广度 </em> 上对CSS选择器的扩充。</p>
 <p>说到了这里，其实也不过就是借别人的光来照亮自己，那么我自己在实践这些选择器的时候发现了一些很容易忽视的点，也是理解不到位容易造成错误的点，上代码。</p>
 <h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;div class=&quot;item&quot;&gt;this is element div&lt;/div&gt;</span><br><span class="line">	&lt;p class=&quot;item&quot;&gt; this is element p &lt;/p&gt;</span><br><span class="line">	&lt;p class=&quot;item&quot;&gt; this is element p &lt;/p&gt;</span><br><span class="line">	&lt;p class=&quot;item&quot;&gt; this is element p &lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>

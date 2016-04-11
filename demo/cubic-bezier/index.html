@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CSS3动画可视化编辑器</title>
+	<link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+	<header></header>
+	<main class="container">
+		<aside class="aside-panel">
+			<div class="aside-block aside-example">
+				<h4 class="aside-block-title">Example</h4>
+				<ul class="aside-block-content">
+					<li>
+						<canvas class="example-item" width="80" height="80" data-cubic='0.25, 0.1, 0.25, 1'></canvas>
+						<p>ease</p>
+						<i class="delete">x</i>
+					</li>
+					<li>
+						<canvas class="example-item" width="80" height="80" data-cubic='0, 0, 1, 1'></canvas>
+						<p>linear</p>
+						<i class="delete">x</i>
+					</li>
+					<li>
+						<canvas class="example-item" width="80" height="80" data-cubic='0.42, 0, 1, 1'></canvas>
+						<p>ease-in</p>
+						<i class="delete">x</i>
+					</li>
+					<li>
+						<canvas class="example-item" width="80" height="80" data-cubic='0, 0, 0.58, 1'></canvas>
+						<p>ease-out</p>
+						<i class="delete">x</i>
+					</li>
+					<li>
+						<canvas class="example-item" width="80" height="80" data-cubic='0.42, 0, 0.58, 1'></canvas>
+						<p>ease-in-out</p>
+						<i class="delete">x</i>
+					</li>
+				</ul>
+			</div>
+			<div class="aside-block aside-result">
+				<h4 class="aside-block-title">Result</h4>
+				<div class="aside-block-content">
+					<canvas id="current" width="60" height="60"></canvas>
+					<canvas id="compare" width="60" height="60"></canvas>
+				</div>
+			</div>
+			<div class="aside-block aside-during">
+				<h4 class="aside-block-title">Duration</h4>
+				<div class="aside-block-content">
+					<label for="during" class="during-label">Duration</label><input id="during" class="during-range" type="range" max="10" min="0.1" step="0.1" value="1"><output class="during-output" for="during">1s</output>
+				</div>
+			</div>
+
+		</aside>
+		<section class="maker-panel">
+			<div class="canvas-maker">
+				<span id="cp0" class="control-point"></span>
+				<canvas id="canvas" width="360" height="600"></canvas>
+				<button id="cp1" class="control-point"></button>
+				<button id="cp2" class="control-point"></button>
+				<span id="cp3" class="control-point"></span>
+			</div>
+			<div class="handler-maker"></div>
+		</section>
+	</main>
+	<footer></footer>
+	<script type="text/template">
+		<div class="modal">
+			<div class="modal-title"></div>
+			<div class="modal-content"></div>
+			<div class="modal-footer"></div>
+		</div>
+	</script>
+	<script src="./js/drag.js"></script>
+	<script src="./js/index.js"></script>
+</body>
+</html>
