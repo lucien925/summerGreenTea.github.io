@@ -24,4 +24,14 @@
 <li>过滤所有用户发布的链接：这个是最无效的做法，因为首先攻击者不一定要从站内发起请求（上面提到过了），而且就算从站内发起请求，途径也远远不知链接一条。比如 <img src="./create_post.php"> 就是个不错的选择，还不需要用户去点击，只要用户的浏览器会自动加载图片，就会自动发起请求。 *在请求发起页面用 alert 弹窗提醒用户：这个方法看上去能干扰站外通过 iframe 发起的 CSRF，但攻击者也可以考虑用 window.alert = function(){}; 把 alert 弄哑，或者干脆脱离 iframe，使用 Flash 来达到目的。</li>
 </ul>
 <p>总体来说，目前防御 CSRF 的诸多方法还没几个能彻底无解的。所以 CSDN 上看到讨论 CSRF 的文章，一般都会含有“无耻”二字来形容（另一位有该名号的貌似是 DDOS 攻击）。作为开发者，我们能做的就是尽量提高破解难度。当破解难度达到一定程度，网站就逼近于绝对安全的位置了（虽然不能到达）。上述请求令牌方法，就我 认为是最有可扩展性的，因为其原理和 CSRF 原理是相克的。CSRF 难以防御之处就在于对服务器端来说，伪造的请求和正常的请求本质上是一致的。而请求令牌的方法，则是揪出这种请求上的唯一区别——来源页面不同。我们还可 以做进一步的工作，例如让页面中 token 的 key 动态化，进一步提高攻击者的门槛。本文只是作者个人认识的一个总结，便不讨论过深了。</p>
-</div></article></div></section><footer><div class="paginator"><a href="/2016/03/27/css3-selector-nth-child-and-nth-of-child/" class="prev">上一篇</a><a href="/2016/03/05/livestyle-plugin/" class="next">下一篇</a></div><div class="copyright"><p>© 2015 - 2016 <a href="http://summerGreenTea.github.io">summer</a>, unless otherwise noted.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/03/27/css3-selector-nth-child-and-nth-of-child/" class="prev">PREV</a><a href="/2016/03/05/livestyle-plugin/" class="next">NEXT</a></div><div data-thread-key="2016/03/23/introduce-to-XSS-and-CSRF/" data-title="总结 XSS 与 CSRF 两种跨站攻击" data-url="http://summerGreenTea.github.io/2016/03/23/introduce-to-XSS-and-CSRF/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"yuhuan"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2015 - 2016 <a href="http://summerGreenTea.github.io">summer</a>, unless otherwise noted.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>

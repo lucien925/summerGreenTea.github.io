@@ -32,4 +32,14 @@
 <h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>通过上面内容的了解，我们可以得出将JS文件放在页面底部的做法是非常可取的结论，那么在实际的工程项目运用是是否真的是如此呢？答案是否定的。</p>
 <p>思考一个应用场景，我们通常需要根据用户的浏览器版本以及用户打开页面第一时间的信息(当前的网络环境等等)来记录一些数据或处理一些兼容性问题。常见的有<em>html5shim.js</em>等类库，需要处理兼容低版本浏览器，但是如果等到页面加载完成之后再加载这类文件的话，就会造成一些不知名的错误。但是通常来说，具体的项目环境，会有不同的使用规则。知乎上这个问题的<a href="https://www.zhihu.com/question/34147508" target="_blank" rel="external">金戈铁马的回答</a>就很能说明这个问题。</p>
 <p>当然这是特殊的情况都有一个共同点，就是这些JS文件必须不能涉及到页面逻辑，也就是不能存在操作DOM代码。</p>
-</div></article></div></section><footer><div class="paginator"><a href="/2016/01/25/javascript-programming-question/" class="prev">上一篇</a><a href="/2015/12/28/css3-animation/" class="next">下一篇</a></div><div class="copyright"><p>© 2015 - 2016 <a href="http://summerGreenTea.github.io">summer</a>, unless otherwise noted.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/01/25/javascript-programming-question/" class="prev">PREV</a><a href="/2015/12/28/css3-animation/" class="next">NEXT</a></div><div data-thread-key="2016/01/24/put-js-in-body-bottom/" data-title="为什么要把JS放在body底部？" data-url="http://summerGreenTea.github.io/2016/01/24/put-js-in-body-bottom/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"yuhuan"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2015 - 2016 <a href="http://summerGreenTea.github.io">summer</a>, unless otherwise noted.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
