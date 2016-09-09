@@ -1,0 +1,42 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 利用styleSheet实现的Hack版JS选择器 · 淡夏的绿茶</title><meta name="description" content="利用styleSheet实现的Hack版JS选择器 - summer"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="http://fonts.useso.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/summerGreenTea" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">利用styleSheet实现的Hack版JS选择器</h1><div class="post-info">May 19, 2016</div><div class="post-content"><p>最近看到<a href="http://www.barretlee.com/entry/" title="小胡子哥的博客" target="_blank" rel="external">小胡子哥的博客</a>，发现了他写的一个很简单JS选择器叫<strong>Mini Query</strong>,兼容IE6、7 起初只是抱着路过的状态的去看下这个库的代码，但当看到下面这段代码的时候，我有点不淡定了。</p>
+<pre><code>var firstStyleSheet = document.styleSheets[0] || document.createStyleSheet();
+firstStyleSheet.addRule(query, &apos;summer:yu&apos;);
+for (var i = 0, len = document.all.length; i &lt; len; i++) {
+  var item = document.all[i];
+  item.currentStyle.Barret &amp;&amp; res.push(item);
+}
+firstStyleSheet.removeRule(0);
+</code></pre><p>直怪自己太菜，于是开了个<code>issue</code>赶紧去问，胡子哥也耐心的回复了我，三言两语的讨论并不能解开我心中的疑惑，所以还是自己乖乖的去自行Google吧。</p>
+<p>扯久了，进入正题。<br><a id="more"></a></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>查阅了相关资料以及一番测试后，自己也写了个类似的库，而且也修复了几个BUG，后期会继续完善，<a href="https://github.com/summerGreenTea/Mini-Query" target="_blank" rel="external">戳这里</a>。</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>篇头贴出的那段代码是为了兼容低版本的IE6/7而做的处理。在IE8+以上的浏览器，是用<code>document.querySelectorAll</code>进行处理的。在低版本的IE中，我们可使用一种比较hack的写法，就是获取或者创建一个<a href="https://msdn.microsoft.com/zh-cn/library/ms531194(v=vs.85).aspx" target="_blank" rel="external">styleSheet</a>对象，然后调用<code>addRule</code>方法给我们的选择器添加一个样式规则，再获取到所有的文档节点，通过判断该节点是否拥有该CSS规则来返回结果集。为了不给我们的选择器匹配元素增加额外的样式，我们选择添加自定义的一个杨思归则，也就有了篇头提到的那段代码。</p>
+<p>好吧！ 这代码写的有点奇淫技巧的味道啊！<br><img src="/2016/05/19/something-about-css-stylesheet/1.gif" alt="1.gif" title=""><br><code>firstStyleSheet.addRule(query, &#39;summer:yu&#39;)</code>是什么鬼。这里贴一下MSDN上关于<code>addRule</code>方法的文档：</p>
+<pre><code>Integer* addRule(
+     [in]           String        sSelector,
+     [in]           String        sStyle,
+     [in, optional] Integer iIndex = -1
+   );
+sSelector [in]
+   String that specifies the selector for the new rule. Single contextual selectors are valid. For example, &quot;div p strong&quot; is a valid contextual selector.
+sStyle [in]
+   String that specifies the style assignments for this style rule. This style takes the same form as an inline style specification. For example, &quot;color:blue&quot; is a valid style parameter.
+iIndex [in, optional]
+   Integer that specifies the zero-based position in the rules collection where the new style rule should be placed.
+Default(-1). The rule is added to the end of the collection.
+</code></pre><p><code>addRule</code>只在IE8以下版本支持，在IE9+这个方法已经被加入DOM2级标准的[insertRule][addRule]所替代。<br>这段代码大概就是在我们样式表对象中给参数中选择器所指代的元素添加了一个“CSS规则”，addRule并不检查该规则正确与否。</p>
+<h3 id="瞎扯"><a href="#瞎扯" class="headerlink" title="瞎扯"></a>瞎扯</h3><p>实在不知道给这段器什么标题，就叫瞎扯吧！</p>
+<p>其实这段代码写的有问题，在IE7下(IETester奔溃了，IE6估计也一样)，<code>var firstStyleSheet = document.styleSheets[0] || document.createStyleSheet();</code>会报错，报错信息是这样的<code>SCRIPT5: 无效的过程调用或参数</code>。</p>
+<p>原本以为<code>document.styleSheets</code>如果返回的是一个空的HTMLCollection对象，那么用数组下标的方式来访问这个对象，可能在IE7下就会报错，但是同样的方法用在<code>document.forms</code>或<code>doucment.all</code>上就不会出错，难道这又是IE6/7下的一个Bug。于是我就修改了下代码：</p>
+<pre><code>var sheet = document.styleSheets.length &gt; 0 ? document.styleSheets[0] : document.createStyleSheet()
+</code></pre><p>这样子就会正常运行(具体的报错原因还不得只，待后续补充)。</p>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/05/30/the-differences-of-Number-parseInt-parsrFloat/" class="prev">上一篇</a><a href="/2016/04/05/ArrayBuffer-TypeArray-DataView/" class="next">下一篇</a></div><div data-thread-key="2016/05/19/something-about-css-stylesheet/" data-title="利用styleSheet实现的Hack版JS选择器" data-url="http://summerGreenTea.github.io/2016/05/19/something-about-css-stylesheet/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"yuhuan"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2015 - 2016 <a href="http://summerGreenTea.github.io">summer</a>, unless otherwise noted.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>

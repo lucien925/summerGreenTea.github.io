@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> javascript函数高级应用系列之-debounce、throttle · 淡夏的绿茶</title><meta name="description" content="javascript函数高级应用系列之-debounce、throttle - summer"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="http://fonts.useso.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/summerGreenTea" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">javascript函数高级应用系列之-debounce、throttle</h1><div class="post-info">Jul 31, 2016</div><div class="post-content"><p>Javascript是一门函数式语言，函<strong>第一公民</strong>的地位在Javascript的中重要性不言而喻。在平时的开发工作中，函数经常被当做封装一系列的通用操作的作用而存在，各种函数的<strong>奇淫巧技</strong>也都是五花八门，而在日常的工作中，一些函数的高级应用可以帮助我们解决很多棘手的问题，而且学习和掌握这些函数的原理能帮助我们更好的掌握函数式编程的精髓。这个系列的博客就记录一些平时学习和工作当中会碰到的一些函数高级应用。<br>这篇文章将要讲述的是<code>debounce</code>和<code>throttle</code>。<br><a id="more"></a></p>
+<h3 id="前景"><a href="#前景" class="headerlink" title="前景"></a>前景</h3><p>上个礼拜接到个小小的改动需求，需要在一个输入框中加入一个人员选择器，作用就是当用户输入的时候，会自动判定用户输入并向后台提供的借口发送数据，后台将符合要求的人员名单返回，前端再将人员名单生成提示下拉菜单显示在输入框的后面。由于内部用人员选择器的组件，所以直接套上就用了，但是之后测试的时候就发现了问题了，人员选择器在响应用户输入的时候有轻微的卡顿，并且输入的速度越快，卡顿越明显。不用说，肯定是用户输入过快，向后台发送请求数过多导致的。</p>
+<h3 id="debounce"><a href="#debounce" class="headerlink" title="debounce"></a>debounce</h3><p><strong>debounce</strong>中文解释为<strong>防反跳</strong>，意思就是在指定的一段时间内多次高速的执行某个操作的时候，将这段时间内的连续相同的操作合并为一次的操作去执行。<br>这个的应用场景非常广泛，除了之前提到的多次响应用户输入操作之外，在监听页面的滚动事件、浏览器的resize和表单提交等都有非常重要的应用。我们来看一个简单的实现：</p>
+<pre><code>var debounce = function(fun, timeout) {
+    var timer = null
+    return function() {
+        var context = this,
+            args = arguments
+        if(timer) clearTimeout(timer)
+        setTimeout(function() {
+            func.apply(context, args)
+        })
+    }
+}
+// example
+window.onresize = debounce(dosomething, 300)
+</code></pre><p>例子中，在浏览器<code>resize</code>的过程中，只有两次<code>resize</code>的时间间隔在300ms内，<code>dosomething</code>才会被执行。细心的朋友就会发现，<code>debounce</code>内指定的操作是在<code>timeout</code>后执行，也就是说，如果我们希望我们的操作需要立即停止连续响应操作后立即执行怎么办？那么久出现了下面的这种debounce写法:</p>
+<pre><code>var debounce = function(fun, timeout, immediate) {
+    var timer = null
+    return function() {
+        var context = this,
+            args = arguments,
+            later = function() {
+                if(!immediate) {
+                    fun.apply(context, args)
+                }
+            }
+        var callNow = immediate &amp;&amp; !timer
+        setTimeout(later, timerout)
+        if(callNow) {
+            fun.apply(context, args)
+        }
+    }
+}
+</code></pre><p><code>immediate</code>将会判定该操作是需要在<code>debounce</code>中立即执行还是延时<code>timeout</code>执行。</p>
+<h3 id="throttle"><a href="#throttle" class="headerlink" title="throttle"></a>throttle</h3><p><strong>throttle</strong>意为函数节流，它和debounce不同的是，debounce是连续两次的操作时间间隔大于timeout才会去执行一次操作，而throttle是保证在连续的多次操作中，每隔timeout就会执行一次操作。</p>
+<pre><code>var throttle = function(fun, timeout) {
+    var last = 0
+    return function() {
+        var context = this,
+            args = arguments
+            now = Date.now()
+        if(now - last &gt;= timeout) {
+            fun.apply(context, argument)
+            last = now
+        }
+    }
+}
+</code></pre><h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>关于<code>debounce</code>和<code>throttle</code>的理解就是这么多了，整篇博客的列出了一些实现代码都是个根据个人理解所写的，并没有很完善的封装，如果有需要更详细的了解一写细节的话可以去underscore的源码中查看具体实现。</p>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/08/03/study-plan/" class="prev">上一篇</a><a href="/2016/05/30/css-getComputedStyle-currentStyle/" class="next">下一篇</a></div><div data-thread-key="2016/07/31/debounce-throttle/" data-title="javascript函数高级应用系列之-debounce、throttle" data-url="http://summerGreenTea.github.io/2016/07/31/debounce-throttle/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"yuhuan"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div class="copyright"><p>© 2015 - 2016 <a href="http://summerGreenTea.github.io">summer</a>, unless otherwise noted.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
