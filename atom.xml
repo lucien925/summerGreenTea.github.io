@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://summerGreenTea.github.io/"/>
-  <updated>2016-09-06T14:32:25.000Z</updated>
+  <updated>2016-09-09T12:26:18.000Z</updated>
   <id>http://summerGreenTea.github.io/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>javascript-for-loop-vs-array-foreach</title>
+    <title>【翻译】for循环和forEach的对比</title>
     <link href="http://summerGreenTea.github.io/2016/08/14/javascript-for-loop-vs-array-foreach/"/>
     <id>http://summerGreenTea.github.io/2016/08/14/javascript-for-loop-vs-array-foreach/</id>
     <published>2016-08-14T05:01:20.000Z</published>
-    <updated>2016-09-06T14:32:25.000Z</updated>
+    <updated>2016-09-09T12:26:18.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>原文链接<a href="http://thejsguy.com/2016/07/30/javascript-for-loop-vs-array-foreach.html?utm_source=javascriptweekly&amp;utm_medium=email" target="_blank" rel="external">The for Loop vs. forEach in JavaScript</a></p>
@@ -39,27 +39,23 @@
 <figure class="highlight fortran"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">products.forEach(<span class="function"><span class="keyword">function</span><span class="params">(product, index)</span></span> &#123;</div><div class="line">	console.<span class="built_in">log</span>(<span class="built_in">product</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <p>因为<strong>products</strong>是一个数组，它继承了所有在<strong>Array.prototype</strong>上面的方法，比如我们可以传递一个函数给被调用的<strong>Array.prototype.forEach()</strong>方法，这个函数在每次遍历执行的过程中，都会被传入遍历的<code>product</code>.</p>
 <p>现在，我们来看看我为什么会选择他们其中的一个去使用.</p>
-<h2 id="for-VS-forEach"><a href="#for-VS-forEach" class="headerlink" title="for VS forEach()"></a>for VS forEach()</h2><ol>
-<li>使用forEach()会增加可阅读性<br><strong>for</strong>循环和<strong>forEach()</strong>方法都允许我们去循环一个数组，但是现在我将来说说我为什么在大多数的时间里都更加喜欢使用<strong>froEach()</strong>.在下面的例子中，每次遍历，<code>product</code>都会被传入回调函数中。我不需要去通过临时变量<code>i</code>例如<code>products[i]</code>来获取当前遍历的<code>product</code>.当你添加更多的代码的时候，即使这么做也不是很难去阅读代码，但会显得更加多余了。想象下如果你的for循环里面还有一个for循环，就像这样:</li>
-</ol>
+<h2 id="for-VS-forEach"><a href="#for-VS-forEach" class="headerlink" title="for VS forEach()"></a>for VS forEach()</h2><p>1.使用forEach()会增加可阅读性</p>
+<p><strong>for</strong>循环和<strong>forEach()</strong>方法都允许我们去循环一个数组，但是现在我将来说说我为什么在大多数的时间里都更加喜欢使用<strong>froEach()</strong>.在下面的例子中，每次遍历，<code>product</code>都会被传入回调函数中。我不需要去通过临时变量<code>i</code>例如<code>products[i]</code>来获取当前遍历的<code>product</code>.当你添加更多的代码的时候，即使这么做也不是很难去阅读代码，但会显得更加多余了。想象下如果你的for循环里面还有一个for循环，就像这样:</p>
 <figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="built_in">var</span> i = <span class="number">0</span>; i &lt; products.<span class="built_in">length</span>; i++) &#123;</div><div class="line">  console.<span class="built_in">log</span>(products[i]);</div><div class="line">  <span class="keyword">for</span> (<span class="built_in">var</span> j = <span class="number">0</span>; j &lt; products[i].sizes.<span class="built_in">length</span>; j++) &#123;</div><div class="line">    console.<span class="built_in">log</span>(products[i].sizes[j]);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>当你的操作不仅仅只是一个console.log()的时候，这个阅读起来会更加困难。</p>
 <figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="built_in">var</span> i = <span class="number">0</span>; i &lt; products.<span class="built_in">length</span>; i++) &#123;</div><div class="line">  <span class="built_in">var</span> <span class="built_in">product</span> = products[i];</div><div class="line">  console.<span class="built_in">log</span>(<span class="built_in">product</span>);</div><div class="line">  <span class="keyword">for</span> (<span class="built_in">var</span> j = <span class="number">0</span>; j &lt; <span class="built_in">product</span>.sizes.<span class="built_in">length</span>; j++) &#123;</div><div class="line">    <span class="built_in">var</span> size = <span class="built_in">product</span>.sizes[j];</div><div class="line">    console.<span class="built_in">log</span>(size);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>变量product和size几乎是没有帮助的，而且我也不喜欢i、j临时变量.现在我们通过下面的代码来比较下forEach()：</p>
+<p>变量product和size几乎是没有帮助的，而且我也不喜欢i、j临时变量。现在我们通过下面的代码来比较下forEach()：</p>
 <figure class="highlight fortran"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">products.forEach(<span class="function"><span class="keyword">function</span><span class="params">(product)</span></span> &#123;</div><div class="line">  <span class="built_in">product</span>.sizes.forEach(<span class="function"><span class="keyword">function</span><span class="params">(size)</span></span> &#123;</div><div class="line">    console.<span class="built_in">log</span>(<span class="built_in">size</span>);</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <p>这里不仅仅是少了几行代码，我们也不需要添加i、j等计数的临时变量.</p>
-<ol>
-<li>forEach()有更少的<code>off-by-one</code>错误</li>
-</ol>
+<p>2.forEach()有更少的<code>off-by-one</code>错误</p>
 <p>Wikipedia对<code>off-by-one</code>的定义:</p>
 <p>有一些方式可以产生<em>off-by-one</em>的错误，但是这里有一个简单的例子。</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (var <span class="built_in">i</span> = <span class="number">0</span>; <span class="built_in">i</span> &lt;= products.<span class="built_in">length</span>; <span class="built_in">i</span>++) &#123;</div><div class="line">  console.log(products[i]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这个for循环开起来不是和文章开头那么很像吗？这里有个很小的不同点。注意for循环的第二个语句，这里的条件语句现在包含的是&lt;=而不是=。作为一个结果，这个循环将会多跑一次。即使这是个很小的例子，但是如果你不注意的话，这些类型的错误就会发生。当使用forEach()方法时，你一点都不需要去考虑这个条件语句</p>
-<ol>
-<li>更早的跳出循环<br>有一个情节我选择for循环而不是forEach()方法就是我想更早的太哦出循环。想象下我有个很长的products列表，我想尽快的找到符合条件的结果，然后做一些操作。如果我使用forEach()，它将会在一些没有必要遍历的结果中去遍历单个product，当数组很长的情况下这可能会引起一些性能问题。而使用for循环，你就拥有了跳出或阻止循环的能力。例如:</li>
-</ol>
+<p>3.更早的跳出循环<br>有一个情节我选择for循环而不是forEach()方法就是我想更早的太哦出循环。想象下我有个很长的products列表，我想尽快的找到符合条件的结果，然后做一些操作。如果我使用forEach()，它将会在一些没有必要遍历的结果中去遍历单个product，当数组很长的情况下这可能会引起一些性能问题。而使用for循环，你就拥有了跳出或阻止循环的能力。例如:</p>
 <figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">for (<span class="name">var</span> i = <span class="number">0</span><span class="comment">; i &lt; products.length; i++) &#123;</span></div><div class="line">  if (<span class="name">matchesSomeCriteria</span>(<span class="name">products</span>[i])) &#123;</div><div class="line">    doSomething()<span class="comment">;</span></div><div class="line">    break<span class="comment">;</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>使用break关键字，当我们找到了正在找的内容时，我们可以尽可能快的在持续遍历的过程中停止循环。这个在ES6中根本算不上什么，ES6有个新的数组方法可以帮我们做类似的操作。这个方法就是find()，我也鼓励你去使用它。然后，在写这篇文章的时间节点上，并不是所有浏览器都已经支持，所以你可能需要使用Babel这样的转换器或者价格polyfill。<br>总结<br>这篇文章并没有很详尽的列出你什么时候该使用for循环，反之亦然，但是我列举了很多我在使用它们其中一个的场景。有一件事情我没有提到的是性能。如果你看了for循环和forEach()的性能比较的话，for循环会更快一些。然而，很多时候，这种性能差异在你的应用当中几乎是体现不出来的，选择使用for循环而不是forEach()其实是一种<em>premature optimization(过早优化)</em>。反而，优化代码的可读性可以确保我们在长期的维护过程中更加容易一点。当使用forEach()的性能存在问题是，然后换成for循环再看看它是否有什么不同。</p>
+<p>当我们找到了正在找的内容时，使用<code>break</code>关键字，我们可以尽可能快的在持续遍历的过程中停止循环。这个在ES6中根本算不上什么，ES6有个新的数组方法可以帮我们做类似的操作。这个方法就是<code>find()</code>，我也鼓励你去使用它。然后，在写这篇文章的时候，并不是所有浏览器都已经支持它，所以你可能需要使用Babel这样的转换器或者加个polyfill。</p>
+<p>##总结<br>这篇文章并没有很详尽的列出你什么时候该使用<code>for</code>循环，反之亦然，但是我列举了很多我在使用它们其中一个的场景。有一件事情我没有提到的是性能。如果你看了<code>for</code>循环和<code>forEach()</code>的性能比较的话，<code>for</code>循环会更快一些。然而，很多时候，这种性能差异在你的应用当中几乎是体现不出来的，选择使用<code>for</code>循环而不是<code>forEach()</code>其实是一种<em>premature optimization(过早优化)</em>。反而，优化代码的可读性可以确保我们在长期的维护过程中更加容易一点。当使用<code>forEach()</code>的性能存在问题是，然后换成<code>for</code>循环再看看它是否有什么不同。</p>
 ]]></content>
     
     <summary type="html">
@@ -203,80 +199,37 @@ window.onresize = debounce(dosomething, 300)
   </entry>
   
   <entry>
-    <title>Javascript 字符转化为数值</title>
-    <link href="http://summerGreenTea.github.io/2016/05/30/the-differences-of-Number-parseInt-parsrFloat/"/>
-    <id>http://summerGreenTea.github.io/2016/05/30/the-differences-of-Number-parseInt-parsrFloat/</id>
-    <published>2016-05-30T02:03:30.000Z</published>
-    <updated>2016-05-30T09:06:20.000Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-      <category term="javascript" scheme="http://summerGreenTea.github.io/tags/javascript/"/>
-    
-  </entry>
-  
-  <entry>
     <title>利用styleSheet实现的Hack版JS选择器</title>
     <link href="http://summerGreenTea.github.io/2016/05/19/something-about-css-stylesheet/"/>
     <id>http://summerGreenTea.github.io/2016/05/19/something-about-css-stylesheet/</id>
     <published>2016-05-19T14:35:27.000Z</published>
-    <updated>2016-05-27T12:32:36.000Z</updated>
+    <updated>2016-09-09T12:40:15.000Z</updated>
     
-    <content type="html"><![CDATA[<p>最近看到<a href="http://www.barretlee.com/entry/" title="小胡子哥的博客" target="_blank" rel="external">小胡子哥的博客</a>，发现了他写的一个很简单JS选择器叫<strong>Mini Query</strong>,兼容IE6、7 起初只是抱着路过的状态的去看下这个库的代码，但当看到下面这段代码的时候，我有点不淡定了。</p>
-<pre><code>var firstStyleSheet = document.styleSheets[0] || document.createStyleSheet();
-firstStyleSheet.addRule(query, &apos;summer:yu&apos;);
-for (var i = 0, len = document.all.length; i &lt; len; i++) {
-  var item = document.all[i];
-  item.currentStyle.Barret &amp;&amp; res.push(item);
-}
-firstStyleSheet.removeRule(0);
-</code></pre><p>直怪自己太菜，于是开了个<code>issue</code>赶紧去问，胡子哥也耐心的回复了我，三言两语的讨论并不能解开我心中的疑惑，所以还是自己乖乖的去自行Google吧。</p>
+    <content type="html"><![CDATA[<p>最近看到<a href="http://www.barretlee.com/entry/" title="小胡子哥的博客" target="_blank" rel="external">小胡子哥的博客</a>，发现了他写的一个很简单JS选择器叫<strong>Mini Query</strong>,兼容IE6、7 起初只是抱着路过的状态的去看下这个库的代码，但当看到下面这段代码的时候，我有点不淡定了。<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> firstStyleSheet = <span class="built_in">document</span>.styleSheets[<span class="number">0</span>] || <span class="built_in">document</span>.createStyleSheet();</div><div class="line">firstStyleSheet.addRule(query, <span class="string">'summer:yu'</span>);</div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = <span class="built_in">document</span>.all.length; i &lt; len; i++) &#123;</div><div class="line">  <span class="keyword">var</span> item = <span class="built_in">document</span>.all[i];</div><div class="line">  item.currentStyle.Barret &amp;&amp; res.push(item);</div><div class="line">&#125;</div><div class="line">firstStyleSheet.removeRule(<span class="number">0</span>);</div></pre></td></tr></table></figure></p>
+<p>直怪自己太菜，于是开了个<code>issue</code>赶紧去问，胡子哥也耐心的回复了我，三言两语的讨论并不能解开我心中的疑惑，所以还是自己乖乖的去自行Google吧。</p>
 <p>扯久了，进入正题。<br><a id="more"></a></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>查阅了相关资料以及一番测试后，自己也写了个类似的库，而且也修复了几个BUG，后期会继续完善，<a href="https://github.com/summerGreenTea/Mini-Query" target="_blank" rel="external">戳这里</a>。</p>
 <h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>篇头贴出的那段代码是为了兼容低版本的IE6/7而做的处理。在IE8+以上的浏览器，是用<code>document.querySelectorAll</code>进行处理的。在低版本的IE中，我们可使用一种比较hack的写法，就是获取或者创建一个<a href="https://msdn.microsoft.com/zh-cn/library/ms531194(v=vs.85).aspx" target="_blank" rel="external">styleSheet</a>对象，然后调用<code>addRule</code>方法给我们的选择器添加一个样式规则，再获取到所有的文档节点，通过判断该节点是否拥有该CSS规则来返回结果集。为了不给我们的选择器匹配元素增加额外的样式，我们选择添加自定义的一个杨思归则，也就有了篇头提到的那段代码。</p>
-<p>好吧！ 这代码写的有点奇淫技巧的味道啊！<br><img src="/2016/05/19/something-about-css-stylesheet/1.gif" alt="1.gif" title=""><br><code>firstStyleSheet.addRule(query, &#39;summer:yu&#39;)</code>是什么鬼。这里贴一下MSDN上关于<code>addRule</code>方法的文档：</p>
-<pre><code>Integer* addRule(
-     [in]           String        sSelector,
-     [in]           String        sStyle,
-     [in, optional] Integer iIndex = -1
-   );
-sSelector [in]
-   String that specifies the selector for the new rule. Single contextual selectors are valid. For example, &quot;div p strong&quot; is a valid contextual selector.
-sStyle [in]
-   String that specifies the style assignments for this style rule. This style takes the same form as an inline style specification. For example, &quot;color:blue&quot; is a valid style parameter.
-iIndex [in, optional]
-   Integer that specifies the zero-based position in the rules collection where the new style rule should be placed.
-Default(-1). The rule is added to the end of the collection.
-</code></pre><p><code>addRule</code>只在IE8以下版本支持，在IE9+这个方法已经被加入DOM2级标准的[insertRule][addRule]所替代。<br>这段代码大概就是在我们样式表对象中给参数中选择器所指代的元素添加了一个“CSS规则”，addRule并不检查该规则正确与否。</p>
+<p>好吧！ 这代码写的有点奇淫技巧的味道啊！<br><img src="/2016/05/19/something-about-css-stylesheet/1.gif" alt="1.gif" title=""><br><code>firstStyleSheet.addRule(query, &#39;summer:yu&#39;)</code>是什么鬼。这里贴一下MSDN上关于<code>addRule</code>方法的文档：<br><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Integer</span>* addRule(</div><div class="line">  [<span class="keyword">in</span>]           <span class="built_in">String</span>        sSelector,</div><div class="line">  [<span class="keyword">in</span>]           <span class="built_in">String</span>        sStyle,</div><div class="line">  [<span class="keyword">in</span>, <span class="keyword">optional</span>] <span class="built_in">Integer</span> iIndex = <span class="number">-1</span></div><div class="line">);</div><div class="line">sSelector [<span class="keyword">in</span>]</div><div class="line"><span class="built_in">String</span> that specifies the selector <span class="keyword">for</span> the <span class="keyword">new</span> rule. <span class="built_in">Single</span> contextual selectors are valid. <span class="keyword">For</span> example, <span class="string">"div p strong"</span> <span class="keyword">is</span> a valid contextual selector.</div><div class="line">sStyle [<span class="keyword">in</span>]</div><div class="line"><span class="built_in">String</span> that specifies the style assignments <span class="keyword">for</span> this style rule. This style takes the same form <span class="keyword">as</span> an inline style specification. <span class="keyword">For</span> example, <span class="string">"color:blue"</span> <span class="keyword">is</span> a valid style parameter.</div><div class="line">iIndex [<span class="keyword">in</span>, <span class="keyword">optional</span>]</div><div class="line"><span class="built_in">Integer</span> that specifies the zero-based position <span class="keyword">in</span> the rules collection <span class="keyword">where</span> the <span class="keyword">new</span> style rule should be placed.</div><div class="line"><span class="keyword">Default</span>(<span class="number">-1</span>). The rule <span class="keyword">is</span> added <span class="keyword">to</span> the <span class="keyword">end</span> <span class="keyword">of</span> the collection.</div></pre></td></tr></table></figure></p>
+<p><code>addRule</code>只在IE8以下版本支持，在IE9+这个方法已经被加入DOM2级标准的[insertRule][addRule]所替代。<br>这段代码大概就是在我们样式表对象中给参数中选择器所指代的元素添加了一个“CSS规则”，addRule并不检查该规则正确与否。</p>
 <h3 id="瞎扯"><a href="#瞎扯" class="headerlink" title="瞎扯"></a>瞎扯</h3><p>实在不知道给这段器什么标题，就叫瞎扯吧！</p>
 <p>其实这段代码写的有问题，在IE7下(IETester奔溃了，IE6估计也一样)，<code>var firstStyleSheet = document.styleSheets[0] || document.createStyleSheet();</code>会报错，报错信息是这样的<code>SCRIPT5: 无效的过程调用或参数</code>。</p>
-<p>原本以为<code>document.styleSheets</code>如果返回的是一个空的HTMLCollection对象，那么用数组下标的方式来访问这个对象，可能在IE7下就会报错，但是同样的方法用在<code>document.forms</code>或<code>doucment.all</code>上就不会出错，难道这又是IE6/7下的一个Bug。于是我就修改了下代码：</p>
-<pre><code>var sheet = document.styleSheets.length &gt; 0 ? document.styleSheets[0] : document.createStyleSheet()
-</code></pre><p>这样子就会正常运行(具体的报错原因还不得只，待后续补充)。</p>
+<p>原本以为<code>document.styleSheets</code>如果返回的是一个空的HTMLCollection对象，那么用数组下标的方式来访问这个对象，可能在IE7下就会报错，但是同样的方法用在<code>document.forms</code>或<code>doucment.all</code>上就不会出错，难道这又是IE6/7下的一个Bug。于是我就修改了下代码：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> sheet = <span class="built_in">document</span>.styleSheets.length &gt; <span class="number">0</span> ? <span class="built_in">document</span>.styleSheets[<span class="number">0</span>] : <span class="built_in">document</span>.createStyleSheet()</div></pre></td></tr></table></figure></p>
+<p>这样子就会正常运行(具体的报错原因还不得只，待后续补充)。</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;最近看到&lt;a href=&quot;http://www.barretlee.com/entry/&quot; title=&quot;小胡子哥的博客&quot;&gt;小胡子哥的博客&lt;/a&gt;，发现了他写的一个很简单JS选择器叫&lt;strong&gt;Mini Query&lt;/strong&gt;,兼容IE6、7 起初只是抱着路过的状态的去看下这个库的代码，但当看到下面这段代码的时候，我有点不淡定了。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;var firstStyleSheet = document.styleSheets[0] || document.createStyleSheet();
-firstStyleSheet.addRule(query, &amp;apos;summer:yu&amp;apos;);
-for (var i = 0, len = document.all.length; i &amp;lt; len; i++) {
-  var item = document.all[i];
-  item.currentStyle.Barret &amp;amp;&amp;amp; res.push(item);
-}
-firstStyleSheet.removeRule(0);
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;直怪自己太菜，于是开了个&lt;code&gt;issue&lt;/code&gt;赶紧去问，胡子哥也耐心的回复了我，三言两语的讨论并不能解开我心中的疑惑，所以还是自己乖乖的去自行Google吧。&lt;/p&gt;
+      &lt;p&gt;最近看到&lt;a href=&quot;http://www.barretlee.com/entry/&quot; title=&quot;小胡子哥的博客&quot;&gt;小胡子哥的博客&lt;/a&gt;，发现了他写的一个很简单JS选择器叫&lt;strong&gt;Mini Query&lt;/strong&gt;,兼容IE6、7 起初只是抱着路过的状态的去看下这个库的代码，但当看到下面这段代码的时候，我有点不淡定了。&lt;br&gt;&lt;figure class=&quot;highlight dart&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; firstStyleSheet = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.styleSheets[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] || &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.createStyleSheet();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;firstStyleSheet.addRule(query, &lt;span class=&quot;string&quot;&gt;&#39;summer:yu&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, len = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.all.length; i &amp;lt; len; i++) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; item = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.all[i];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  item.currentStyle.Barret &amp;amp;&amp;amp; res.push(item);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;firstStyleSheet.removeRule(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;直怪自己太菜，于是开了个&lt;code&gt;issue&lt;/code&gt;赶紧去问，胡子哥也耐心的回复了我，三言两语的讨论并不能解开我心中的疑惑，所以还是自己乖乖的去自行Google吧。&lt;/p&gt;
 &lt;p&gt;扯久了，进入正题。&lt;br&gt;
     
     </summary>
     
     
-      <category term="javascript" scheme="http://summerGreenTea.github.io/tags/javascript/"/>
-    
       <category term="css" scheme="http://summerGreenTea.github.io/tags/css/"/>
+    
+      <category term="javascript" scheme="http://summerGreenTea.github.io/tags/javascript/"/>
     
   </entry>
   
@@ -381,11 +334,11 @@ firstStyleSheet.removeRule(0);
   </entry>
   
   <entry>
-    <title>总结 XSS 与 CSRF 两种跨站攻击</title>
+    <title>【转载】总结 XSS 与 CSRF 两种跨站攻击</title>
     <link href="http://summerGreenTea.github.io/2016/03/23/introduce-to-XSS-and-CSRF/"/>
     <id>http://summerGreenTea.github.io/2016/03/23/introduce-to-XSS-and-CSRF/</id>
     <published>2016-03-23T10:08:34.000Z</published>
-    <updated>2016-03-23T11:13:36.000Z</updated>
+    <updated>2016-09-09T12:23:00.000Z</updated>
     
     <content type="html"><![CDATA[<p>在那个年代，大家一般用拼接字符串的方式来构造动态 SQL 语句创建应用，于是 SQL 注入成了很流行的攻击方式。在这个年代， 参数化查询 已经成了普遍用法，我们已经离 SQL 注入很远了。但是，历史同样悠久的 XSS 和 CSRF 却没有远离我们。由于之前已经对 XSS 很熟悉了，所以我对用户输入的数据一直非常小心。如果输入的时候没有经过 Tidy 之类的过滤，我一定会在模板输出时候全部转义。所以个人感觉，要避免 XSS 也是很容易的，重点是要“小心”。但最近又听说了另一种跨站攻击 CSRF ，于是找了些资料了解了一下，并与 XSS 放在一起做个比较。<br><a id="more"></a></p>
 <p><em>本文转自: <a href="https://blog.tonyseek.com/post/introduce-to-xss-and-csrf/" target="_blank" rel="external">https://blog.tonyseek.com/post/introduce-to-xss-and-csrf/</a></em></p>
@@ -423,6 +376,8 @@ firstStyleSheet.removeRule(0);
     
     
       <category term="security" scheme="http://summerGreenTea.github.io/tags/security/"/>
+    
+      <category term="转载" scheme="http://summerGreenTea.github.io/tags/%E8%BD%AC%E8%BD%BD/"/>
     
   </entry>
   
@@ -924,6 +879,38 @@ firstStyleSheet.removeRule(0);
       <category term="Javascript" scheme="http://summerGreenTea.github.io/tags/Javascript/"/>
     
       <category term="ESMAScript6" scheme="http://summerGreenTea.github.io/tags/ESMAScript6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>学习javascript 模块化的总结(二)</title>
+    <link href="http://summerGreenTea.github.io/2015/12/06/js-modularization-programming2/"/>
+    <id>http://summerGreenTea.github.io/2015/12/06/js-modularization-programming2/</id>
+    <published>2015-12-06T04:06:20.000Z</published>
+    <updated>2016-03-02T15:00:24.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>前文简单的总结了下前端模块化的一些发展历程和CommonJS规范、AMD规范以及一些模块加载库的实现，这篇文章将介绍下<strong>browserify</strong>和<strong>webpack</strong>及以用法。当然，前端模块化最让人惊喜的莫过于ES6的模块化加载方案，后续学习时，也会在ES6学习系列的文章中总结一下。<br><a id="more"></a></p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><h3 id="browserify"><a href="#browserify" class="headerlink" title="browserify"></a>browserify</h3><p><strong>browserify</strong>是一个使用node.js编写的模块管理器，你可以使用类似于node.js中的require()来在我们的项目中引入你想要依赖或者使用的模块。browserify托管在npm上，可以使用:</p>
+<pre><code>npm install browserify -g
+</code></pre><p>来安装browserify。那么如何使用browserify呢，下面通过一小段代码来感受一下:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// a.js</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="built_in">console</span>.log(<span class="string">'a'</span>);</div><div class="line">&#125;</div><div class="line">modules.export = a;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// b.js</span></div><div class="line"><span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'./a.js'</span>);</div><div class="line">a(); <span class="comment">// a</span></div></pre></td></tr></table></figure>
+<p>通过：</p>
+<pre><code>browserify b.js -o bundle.js
+</code></pre><p>来将b.js的代码和b.js中reuqire进来的模块进行打包进一个文件(bundle.js)中。</p>
+<h3 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h3><p><strong>webpack</strong>的出现让前端开发重新定义了模块这一词儿。在webpack中，css、图片等静态资源都可以被打包成模块。webpack还支持在模块打包时的插件处理机制。在工程的根目录下新建<strong>webpack.config.js</strong>文件，在文件中配置相关的选项:<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// webpack.config.js</span></div><div class="line">module.exports = &#123;</div><div class="line"><span class="symbol">    entry:</span> <span class="string">"./entry.js"</span>,</div><div class="line"><span class="symbol">    output:</span> &#123;</div><div class="line"><span class="symbol">        path:</span> __dirname,</div><div class="line"><span class="symbol">        filename:</span> <span class="string">"bundle.js"</span></div><div class="line">    &#125;,</div><div class="line"><span class="symbol">    module:</span> &#123;</div><div class="line"><span class="symbol">        loaders:</span> [</div><div class="line">            &#123; test: /\.css$/, loader: <span class="string">"style!css"</span> &#125;</div><div class="line">        ]</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>在module.loaders中，我们使用了<code>style</code>和<code>css</code>两个loader来帮我们处理在浏览器中加载css文件。在webpack社区中，开源的各种插件已经足够满足我们日常的开发需求。其实细细去挖webpack的东西发现，其实还是一大堆的插件的使用方式balabala的，不如我们带上webpack的好基友React一起来说下吧。</p>
+<p>webpack的到来简直是让React如虎添翼,其核心的功能与作用则和React中的组件化的思想完美契合，并且使用babel-loader来支持React的jsx语法，webpack还支持Hot Loading Component让你不用忍受页面刷来刷去的痛苦。简单的几个loaders一配置，一键搞定。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前文简单的总结了下前端模块化的一些发展历程和CommonJS规范、AMD规范以及一些模块加载库的实现，这篇文章将介绍下&lt;strong&gt;browserify&lt;/strong&gt;和&lt;strong&gt;webpack&lt;/strong&gt;及以用法。当然，前端模块化最让人惊喜的莫过于ES6的模块化加载方案，后续学习时，也会在ES6学习系列的文章中总结一下。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Javascript" scheme="http://summerGreenTea.github.io/tags/Javascript/"/>
     
   </entry>
   
